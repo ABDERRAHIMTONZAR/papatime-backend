@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "build": "npx prisma generate",
+  "start": "cross-env NODE_ENV=production node server.js",
+  "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "migrate:dev": "cross-env NODE_ENV=development npx prisma migrate dev",
+    "migrate:prod": "cross-env NODE_ENV=production npx prisma migrate deploy"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +25,7 @@
     "prisma": "^7.10.0"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "nodemon": "^3.1.14"
   }
 }
