@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "build": "npx prisma generate",
-  "start": "cross-env NODE_ENV=production node server.js",
+"postinstall": "npx prisma generate",
+  "build": "npx prisma generate",
+  "start": "node server.js",
   "dev": "cross-env NODE_ENV=development nodemon server.js",
     "migrate:dev": "cross-env NODE_ENV=development npx prisma migrate dev",
     "migrate:prod": "cross-env NODE_ENV=production npx prisma migrate deploy"
