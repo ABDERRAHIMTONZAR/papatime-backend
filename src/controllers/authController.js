@@ -5,7 +5,7 @@ const prisma = require('../config/prisma');
 const register = async (req, res) => {
   try {
     const { email, password, name } = req.body;
-
+console.log('Register body:', req.body);
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) return res.status(400).json({ message: 'Email déjà utilisé' });
 
@@ -18,6 +18,7 @@ const register = async (req, res) => {
   res.status(201).json({ token, user: { id: user.id, email: user.email, name: user.name } });
 
   } catch (error) {
+     console.error('Register error:', error); // ← ajoutez ça
     res.status(500).json({ message: 'Erreur serveur', error });
   }
 };
