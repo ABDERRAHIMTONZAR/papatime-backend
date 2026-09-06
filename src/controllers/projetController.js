@@ -6,17 +6,19 @@ const getProjects = async (req, res) => {
     
     let projects;
     if (user.role === 'ADMIN') {
-      // Admin voit tous les projets de son équipe
       projects = await prisma.projet.findMany({
         where: { equipeId: user.equipeId },
         include: {
           timeEntries: { select: { duration: true } },
-          taches: true,
+          taches: {
+            include: {
+              timeEntries: { select: { duration: true } }
+            }
+          },
           createdBy: { select: { name: true, email: true } }
         }
       });
     } else {
-      // Employee voit seulement ses projets
       projects = await prisma.projet.findMany({
         where: { equipeId: user.equipeId },
         include: {
