@@ -18,26 +18,27 @@ const getTaches = async (req, res) => {
         orderBy: { createdAt: 'desc' }
       });
     } else {
-      // Employee voit seulement tâches de son équipe
-      taches = await prisma.tache.findMany({
-        where: { 
-          projetId: parseInt(projetId),
-          OR: [
-            { equipeId: user.equipeId }, // tâche assignée à son équipe
-            { equipeId: null }           // tâche non assignée
-          ]
-        },
-        include: {
-          timeEntries: { 
-            where: { userId: req.userId },
-            select: { duration: true } 
-          },
-          assignedTo: { select: { id: true, name: true, email: true } },
-          equipe: { select: { id: true, name: true } }
-        },
-        orderBy: { createdAt: 'desc' }
-      });
-    }
+  // Employee voit seulement SES tâches
+  taches = await prisma.tache.findMany({
+    where: { 
+      projetId: parseInt(projetId),
+      OR: [
+        { assignedId: user.id },           // assignée à lui
+        { assignedId: null,                // non assignée
+          equipeId: user.equipeId }        // de son équipe
+      ]
+    },
+    include: {
+      timeEntries: { 
+        where: { userId: req.userId },
+        select: { duration: true } 
+      },
+      assignedTo: { select: { id: true, name: true, email: true } },
+      equipe: { select: { id: true, name: true } }
+    },
+    orderBy: { createdAt: 'desc' }
+  });
+}
 
     const tachesWithTotal = taches.map(t => ({
       ...t,
