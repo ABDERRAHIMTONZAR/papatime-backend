@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-"postinstall": "npx prisma generate",
-  "build": "npx prisma generate",
-  "start": "node server.js",
-  "dev": "cross-env NODE_ENV=development nodemon server.js",
+    "postinstall": "npx prisma generate",
+    "build": "npx prisma generate",
+    "start": "node server.js",
+    "dev": "cross-env NODE_ENV=development nodemon server.js",
     "migrate:dev": "cross-env NODE_ENV=development npx prisma migrate dev",
     "migrate:prod": "cross-env NODE_ENV=production npx prisma migrate deploy"
   },
@@ -21,6 +21,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "groq-sdk": "^1.6.0",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.23.0",
     "prisma": "^7.10.0"

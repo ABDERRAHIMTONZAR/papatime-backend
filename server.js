@@ -7,6 +7,9 @@ const projetRoutes = require('./src/routes/projet');
 const timeEntryRoutes = require('./src/routes/timeEntry');
 const dashboardRoutes = require('./src/routes/dashboard');
 const tacheRoutes = require('./src/routes/tache');
+const equipeRoutes = require('./src/routes/equipe');
+const rapportRoutes = require('./src/routes/rapport');
+const superAdminRoutes = require('./src/routes/superAdmin');
 
 const app = express();
 
@@ -18,6 +21,9 @@ app.use('/api/projets', projetRoutes);
 app.use('/api/time-entries', timeEntryRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/taches', tacheRoutes);
+app.use('/api/equipes', equipeRoutes);
+app.use('/api/rapports', rapportRoutes);
+app.use('/api/super-admin', superAdminRoutes);
 app.get('/', (req, res) => {
   res.json({ message: '✅ PapaTime API running' });
 });
