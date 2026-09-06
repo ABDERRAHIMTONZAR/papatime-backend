@@ -57,7 +57,7 @@ const createTache = async (req, res) => {
     if (user.role !== 'ADMIN') return res.status(403).json({ message: 'Accès refusé' });
 
     const { projetId } = req.params;
-    const { name, description, assignedId, equipeId } = req.body;
+    const { name, description, assignedId } = req.body;
     
     const tache = await prisma.tache.create({
       data: { 
@@ -65,16 +65,11 @@ const createTache = async (req, res) => {
         description, 
         projetId: parseInt(projetId),
         assignedId: assignedId ? parseInt(assignedId) : null,
-        equipeId: equipeId ? parseInt(equipeId) : null
-      },
-      include: {
-        assignedTo: { select: { id: true, name: true, email: true } },
-        equipe: { select: { id: true, name: true } }
+        equipeId: user.equipeId // ← automatiquement l'équipe de l'admin !
       }
     });
     res.status(201).json(tache);
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: 'Erreur serveur', error });
   }
 };
